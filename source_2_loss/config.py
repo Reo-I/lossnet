@@ -1,0 +1,9 @@
+MARGIN = 1.0 # xi
+WEIGHT = 1.0 # lambda
+
+LR = 0.05
+
+MOMENTUM = 0.9
+WDECAY = 5e-4
+
+EPOCH_LOSS = 120
