@@ -10,27 +10,6 @@ class JaccardLoss(nn.Module):
         self.threshold = threshold
         self.name = "JaccardLoss"
 
-    def forward(self, input, target, device="cuda"):
-        input = torch.softmax(input, dim=1)
-        losses = torch.empty(input.shape[0]).to(device)
-        #print(input.size(), target.size())
-        #print("a--")
-        for j in range(0, input.shape[0]):
-            loss = 0
-            for i in range(1,input.shape[1]):  # background is not included
-                ypr = input[j, i, :, :]
-                ygt = target[j, i, :, :]
-                loss += 1 - metrics.fscore(ypr, ygt)
-            losses[j] = loss
-        return losses
-
-class JaccardLoss_(nn.Module):
-    def __init__(self, class_weights=1.0, threshold=None):
-        super().__init__()
-        self.class_weights = torch.tensor(class_weights)
-        self.threshold = threshold
-        self.name = "JaccardLoss"
-
     def forward(self, input, target):
         input = torch.softmax(input, dim=1)
         losses = 0
@@ -39,7 +18,7 @@ class JaccardLoss_(nn.Module):
         for i in range(0, input.shape[1]):  # background is not included
             ypr = input[:, i, :, :]
             ygt = target[:, i, :, :]
-            losses += 1 - metrics.fscore(ypr, ygt)
+            losses += 1 - metrics.iou(ypr, ygt)
         return losses
 
 
