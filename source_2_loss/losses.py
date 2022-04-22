@@ -34,7 +34,7 @@ class DiceLoss(nn.Module):
         for i in range(1, input.shape[1]):  # background is not included
             ypr = input[:, i, :, :]
             ygt = target[:, i, :, :]
-            losses += 1 - metrics.iou(ypr, ygt)
+            losses += 1 - metrics.fcore(ypr, ygt)
         return losses
 
 class CEWithLogitsLoss(nn.Module):
