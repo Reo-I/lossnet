@@ -14,7 +14,6 @@ class JaccardLoss(nn.Module):
         input = torch.softmax(input, dim=1)
         losses = 0
         print(input.size(), target.size())
-        print("a--")
         for i in range(0, input.shape[1]):  # background is not included
             ypr = input[:, i, :, :]
             ygt = target[:, i, :, :]
